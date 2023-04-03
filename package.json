@@ -1,0 +1,23 @@
+{
+  "name": "ieslint-cli",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm build --watch",
+    "build": "tsup src/index.ts --clean",
+    "test": "node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@antzy/eslint-config": "^2.0.2",
+    "@types/node": "^18.15.11",
+    "eslint": "^8.37.0",
+    "tsup": "^6.7.0"
+  },
+  "dependencies": {
+    "commander": "^10.0.0"
+  }
+}
