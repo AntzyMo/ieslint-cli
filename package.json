@@ -1,15 +1,27 @@
 {
-  "name": "ieslint-cli",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@antzy/ieslint",
+  "version": "0.0.1",
+  "description": "generate my eslint config",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "ieslint": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "pnpm build --watch",
-    "build": "tsup src/index.ts --clean",
+    "build": "tsup src/index.ts --format esm --clean",
     "test": "node ./dist/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "homepage": "https://github.com/AntzyMo/ieslint-cli#readme",
+  "keywords": ["eslint", "config", "generator"],
+  "author": "AntzyMo <mozbano@163.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntzyMo/ieslint-cli.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@antzy/eslint-config": "^2.0.2",
@@ -18,6 +30,8 @@
     "tsup": "^6.7.0"
   },
   "dependencies": {
-    "commander": "^10.0.0"
+    "commander": "^10.0.0",
+    "execa": "^7.1.1",
+    "kolorist": "^1.7.0"
   }
 }
