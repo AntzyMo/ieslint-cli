@@ -13,10 +13,15 @@
   "scripts": {
     "dev": "pnpm build --watch",
     "build": "tsup src/index.ts --format esm --clean",
-    "test": "node ./dist/index.js"
+    "test": "node ./dist/index.js",
+    "release": "bumpp package.json  --commit --push --tag"
   },
   "homepage": "https://github.com/AntzyMo/ieslint-cli#readme",
-  "keywords": ["eslint", "config", "generator"],
+  "keywords": [
+    "eslint",
+    "config",
+    "generator"
+  ],
   "author": "AntzyMo <mozbano@163.com>",
   "repository": {
     "type": "git",
@@ -26,6 +31,7 @@
   "devDependencies": {
     "@antzy/eslint-config": "^2.0.2",
     "@types/node": "^18.15.11",
+    "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "tsup": "^6.7.0"
   },
