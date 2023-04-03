@@ -1,3 +1,7 @@
+<p align=center>
+<a href="https://github.com/AntzyMo/iEslint-cli"><img src="./assets/logo.svg"/></a>
+</p>
+
 <p align="center">
     <br> English | <a href="README-CN.md">中文</a>
 </p>
