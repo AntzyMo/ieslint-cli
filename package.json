@@ -10,7 +10,6 @@
   "files": [
     "dist"
   ],
-  "private": true,
   "scripts": {
     "dev": "pnpm build --watch",
     "build": "tsup src/index.ts --format esm --clean",
