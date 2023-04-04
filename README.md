@@ -35,6 +35,5 @@ or
 npx  @antzy/ieslint
 ```
 
-
-
-
+## License
+[MIT](./LICENSE) License &copy; 2023-PRESENT [AntzyMo](https://github.com/AntzyMo)
