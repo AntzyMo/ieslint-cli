@@ -25,7 +25,7 @@ pnpm i @antzy/ieslint -g
 
 ## Usage
 ```shell
-ieslint
+ies
 ```
 or
 

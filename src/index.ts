@@ -16,6 +16,7 @@ function findEslintrc(dir: string[]) {
 
 const res = await readdir(cwd())
 const fileEslintName = findEslintrc(res)
+if (!isPackageExists('@antzy/eslint-config')) await execaCommand('pnpm add @antzy/eslint-config -D', { stdout: 'inherit' })
 
 if (fileEslintName) {
   resetEslintExtends()
@@ -30,8 +31,6 @@ async function resetEslintExtends() {
   const [extendsValue] = code.match(reg)
 
   if (!extendsValue.includes('@antzy')) {
-    if (!isPackageExists('@antzy/eslint-config')) await execaCommand('pnpm add @antzy/eslint-config -D', { stdout: 'inherit' })
-
     const newCode = code.replace(reg, match => {
       const [key] = match.split(':')
       return `${key}: '@antzy'`
@@ -64,18 +63,13 @@ async function resetEslintExtends() {
 
 async function pnpmAddEslint() {
   const eslintConfig = 'module.exports = { extends: \'@antzy\' }'
-  try {
-    await execaCommand('pnpm add eslint @antzy/eslint-config -D', { stdout: 'inherit' })
-    const eslintFileUrl = path.join(cwd(), '.eslintrc.cjs')
-    await writeFile(eslintFileUrl, eslintConfig)
+  const eslintFileUrl = path.join(cwd(), '.eslintrc.cjs')
+  await writeFile(eslintFileUrl, eslintConfig).catch(() => process.exit())
 
-    console.log('')
-    console.log(green(`+ 1  | ${eslintConfig}\n`))
-    console.log('The above configuration has been added to:', bold(green('.eslintrc.cjs')))
-    console.log('')
-  } catch {
-    process.exit()
-  }
+  console.log('')
+  console.log(green(`+  1 | ${eslintConfig}\n`))
+  console.log('The above configuration has been added to:', bold(green('.eslintrc.cjs')))
+  console.log('')
 }
 
 function printDiff(form: string, to: string) {
