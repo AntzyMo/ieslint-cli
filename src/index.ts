@@ -16,7 +16,9 @@ function findEslintrc(dir: string[]) {
 
 const res = await readdir(cwd())
 const fileEslintName = findEslintrc(res)
-if (!isPackageExists('@antzy/eslint-config')) await execaCommand('pnpm add @antzy/eslint-config -D', { stdout: 'inherit' })
+if (!isPackageExists('@antzy/eslint-config', { paths: [process.cwd()] })) {
+  await execaCommand('pnpm add @antzy/eslint-config -D', { stdout: 'inherit' })
+}
 
 if (fileEslintName) {
   resetEslintExtends()
