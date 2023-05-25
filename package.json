@@ -2,10 +2,10 @@
   "name": "@antzy/ieslint",
   "version": "0.1.1",
   "description": "generate my eslint config",
-  "main": "dist/index.js",
+  "main": "cli/index.js",
   "type": "module",
   "bin": {
-    "ies": "dist/index.js"
+    "ies": "cli/index.js"
   },
   "files": [
     "dist"
