@@ -1,1 +1,1 @@
-import '../dist/index.js'
+import '../bin/ieslint.js'
