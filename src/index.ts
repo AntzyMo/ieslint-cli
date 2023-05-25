@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import path from 'node:path'
 import * as Diff from 'diff'
 import prompts from 'prompts'
