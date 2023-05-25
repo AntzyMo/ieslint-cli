@@ -1,6 +1,6 @@
 {
   "name": "@antzy/ieslint",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "generate my eslint config",
   "main": "bin/ieslint.js",
   "type": "module",
