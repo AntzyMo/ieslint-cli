@@ -5,15 +5,15 @@
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "ieslint": "dist/index.js"
+    "ies": "dist/index.js"
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "pnpm build --watch",
-    "build": "tsup src/index.ts --format esm --clean",
-    "test": "node ./dist/index.js",
+    "build": "tsup --config tsup.config.ts",
+    "test": "npm -C playground run start",
     "release": "bumpp package.json  --commit --push --tag"
   },
   "homepage": "https://github.com/AntzyMo/ieslint-cli#readme",
@@ -29,16 +29,18 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@antzy/eslint-config": "^2.0.2",
-    "@types/node": "^18.15.11",
+    "@antzy/eslint-config": "^2.0.4",
+    "@types/node": "^20.2.3",
     "bumpp": "^9.1.0",
-    "eslint": "^8.37.0",
+    "eslint": "^8.41.0",
     "tsup": "^6.7.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "dependencies": {
-    "commander": "^10.0.0",
+    "commander": "^10.0.1",
+    "diff": "^5.1.0",
     "execa": "^7.1.1",
-    "kolorist": "^1.7.0"
+    "kolorist": "^1.8.0",
+    "local-pkg": "^0.4.3"
   }
 }
