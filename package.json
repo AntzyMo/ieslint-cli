@@ -1,6 +1,6 @@
 {
   "name": "@antzy/ieslint",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "generate my eslint config",
   "main": "cli/index.js",
   "type": "module",
@@ -41,6 +41,7 @@
     "diff": "^5.1.0",
     "execa": "^7.1.1",
     "kolorist": "^1.8.0",
-    "local-pkg": "^0.4.3"
+    "local-pkg": "^0.4.3",
+    "prompts": "^2.4.2"
   }
 }
