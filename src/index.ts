@@ -1,7 +1,6 @@
 import path from 'node:path'
 import * as Diff from 'diff'
 import prompts from 'prompts'
-import { cwd } from 'node:process'
 import { execaCommand } from 'execa'
 import { isPackageExists } from 'local-pkg'
 import { bold, gray, green, red } from 'kolorist'
@@ -9,25 +8,28 @@ import { readFile, readdir, writeFile } from 'node:fs/promises'
 
 import './commander'
 
+await pnpmInstall(['eslint', '@antzy/eslint-config'])
+const res = await readdir(process.cwd())
+const fileEslintName = findEslintrc(res)
+
+if (fileEslintName) {
+  resetEslintExtends()
+} else {
+  addEslint()
+}
+
 function findEslintrc(dir: string[]) {
   const eslintFile = dir.find(fileName => fileName.includes('.eslintrc'))
   return eslintFile
 }
 
-const res = await readdir(cwd())
-const fileEslintName = findEslintrc(res)
-if (!isPackageExists('@antzy/eslint-config', { paths: [process.cwd()] })) {
-  await execaCommand('pnpm add @antzy/eslint-config -D', { stdout: 'inherit' })
-}
-
-if (fileEslintName) {
-  resetEslintExtends()
-} else {
-  pnpmAddEslint()
+async function pnpmInstall(modules: string[]) {
+  const installModules = modules.filter(module => !isPackageExists(module, { paths: [process.cwd()] })).join(' ')
+  if (installModules) return execaCommand(`pnpm add ${installModules} -D`, { stdout: 'inherit' })
 }
 
 async function resetEslintExtends() {
-  const eslintFileUrl = path.join(cwd(), fileEslintName)
+  const eslintFileUrl = path.join(process.cwd(), fileEslintName)
   const code = await readFile(eslintFileUrl, 'utf-8')
   const reg = /extends\s*:\s*(?:(?:'|")[^'"]*(?:'|"))|extends\s*:\s*\[[^[\]]*\]/
   const [extendsValue] = code.match(reg)
@@ -63,9 +65,9 @@ async function resetEslintExtends() {
   }
 }
 
-async function pnpmAddEslint() {
+async function addEslint() {
   const eslintConfig = 'module.exports = { extends: \'@antzy\' }'
-  const eslintFileUrl = path.join(cwd(), '.eslintrc.cjs')
+  const eslintFileUrl = path.join(process.cwd(), '.eslintrc.cjs')
   await writeFile(eslintFileUrl, eslintConfig).catch(() => process.exit())
 
   console.log('')
