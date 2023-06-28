@@ -1,23 +1,25 @@
+name: Release
 
-name: publish npm
+permissions:
+  contents: write
 
 on:
   push:
-    tags: 
+    tags:
       - 'v*'
 
 jobs:
-  publish-npm:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: npm i pnpm -g
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm build
-      - run: npm publish --access public
+          node-version: 16.x
+
+      - run: npx changelogithub # or changelogithub@0.12 if ensure the stable result
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.IES_TOKEN}}
