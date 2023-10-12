@@ -30,19 +30,18 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@antzy/eslint-config": "^2.0.4",
-    "@types/node": "^20.2.3",
-    "bumpp": "^9.1.0",
-    "eslint": "^8.41.0",
-    "tsup": "^6.7.0",
-    "typescript": "^5.0.4"
+    "@antzy/eslint-config": "^3.2.1",
+    "@types/node": "^20.8.4",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.51.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
-    "commander": "^10.0.1",
-    "diff": "^5.1.0",
-    "execa": "^7.1.1",
+    "commander": "^11.0.0",
+    "execa": "^8.0.1",
     "kolorist": "^1.8.0",
-    "local-pkg": "^0.4.3",
+    "local-pkg": "^0.5.0",
     "prompts": "^2.4.2"
   }
 }
