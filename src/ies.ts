@@ -1,7 +1,8 @@
 import path from 'node:path'
+import * as Diff from 'diff'
 import { execaCommand } from 'execa'
-import { bold, green } from 'kolorist'
 import { isPackageExists } from 'local-pkg'
+import { bold, gray, green, red } from 'kolorist'
 import { readFile, readdir, writeFile } from 'node:fs/promises'
 
 export async function setupEslintConfig() {
@@ -32,24 +33,48 @@ async function addEslintConfig() {
   const rootPkgPath = path.resolve(process.cwd(), 'package.json')
   const pkgInfo = await readFile(rootPkgPath, { encoding: 'utf8' })
 
-  let importAntzyESlintConfig = ''
+  let eslintConfigTemplate = ''
   if (pkgInfo.includes('"type": "module"')) {
-    importAntzyESlintConfig = "import { antzy } from '@antzy/eslint-config'"
+    eslintConfigTemplate = "import { antzy } from '@antzy/eslint-config'\n\nexport default antzy()"
   } else {
-    importAntzyESlintConfig = "const { antzy } = require('@antzy/eslint-config')"
+    eslintConfigTemplate = "const { antzy } = require('@antzy/eslint-config')\n\nmodule.exports = antzy()"
   }
-
-  const eslintConfigTemplate = `
-  ${importAntzyESlintConfig}\n\nexport default antzy()
-`
 
   const eslintFileUrl = path.join(process.cwd(), 'eslint.config.js')
   await writeFile(eslintFileUrl, eslintConfigTemplate.trim()).catch(() => process.exit())
 
   console.log('')
-  console.log(green(`+  1 | ${importAntzyESlintConfig}`))
-  console.log(green(`+  2 | export deafult antzy()\n`))
+  printDiff('', eslintConfigTemplate)
 
   console.log('The above configuration has been added to:', bold(green('eslint.config.js')))
   console.log('')
+}
+
+function printDiff(form: string, to: string) {
+  const diffs = Diff.diffLines(form, to)
+  let no = 0
+  let output = ''
+
+  for (const diff of diffs) {
+    let lines = diff.value.trimEnd().split('\n')
+    if (!('added' in diff)) {
+      if (lines.length > 3) {
+        no = diff.count - 3
+        lines = lines.slice(-3)
+      }
+    }
+
+    for (const line of lines) {
+      if (!diff.added) no += 1
+      if (diff.added) {
+        output += green(`+     | ${line}\n`)
+      } else if (diff.removed) {
+        output += red(`- ${no.toString().padStart(3, ' ')} | ${line}\n`)
+      } else {
+        output += gray(`  ${no.toString().padStart(3, ' ')} | ${line}\n`)
+      }
+    }
+  }
+
+  console.log(output.trimEnd())
 }
